@@ -3,11 +3,12 @@ package GameEngine;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.geom.Area;
-import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.*;
 
-public abstract class Sprite {
+import javax.swing.JComponent;
+
+public abstract class Sprite extends JComponent {
 	private BufferedImage spriteImage;
 	private Graphics2D spriteImageG2D;
 	private Area area;
