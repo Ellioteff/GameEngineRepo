@@ -14,11 +14,11 @@ public class DynamicSprite extends Sprite {
 
 	}
 	public void move() {
-		
+		xPos=+1;
+		System.out.println("moving");
 	}
 	
 	protected void paintComponent(Graphics g) {
-		System.out.println("ritar dynsprite");
 		super.paintComponent(g);
 		
 

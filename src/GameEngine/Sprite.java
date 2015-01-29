@@ -13,8 +13,8 @@ public abstract class Sprite extends JComponent {
 	private BufferedImage spriteImage;
 	private Graphics2D spriteImageG2D;
 	private Area area;
-	private int xPos;
-	private int yPos;
+	protected int xPos;
+	protected int yPos;
 
 	public Sprite() {
 
@@ -26,9 +26,8 @@ public abstract class Sprite extends JComponent {
 
 	@Override
 	protected void paintComponent(Graphics g) {
-		System.out.println("ritar sprite");
 		super.paintComponent(g);
-		g.drawImage(spriteImage, 0, 0, this);
+		g.drawImage(spriteImage, xPos, yPos, this);
 
 	}
 

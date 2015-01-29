@@ -52,15 +52,16 @@ public class Game implements Serializable {
 		double delta = 0;
 		boolean render = true;
 		
-		//testkod nedan
 		BufferedImage tempImage;
 		try {
 			tempImage = ImageIO.read(new File("D:/skola/GameEngineRepo/assets/silvia.png"));
-			frame.getContentPane().add(new DynamicSprite(50,50,0,0, tempImage));
+			addSprite(new DynamicSprite(50,50,0,0, tempImage));
 		} catch (IOException e) {
 			System.out.println("couldnt open file");
 		}
+		frame.validate();
 		frame.repaint();
+		
 		
       
 
@@ -89,6 +90,9 @@ public class Game implements Serializable {
 				frames = 0;
 				ticks = 0;
 			}
+			for(Sprite s : sprites)
+				s.move();
+			
 		}
 	}
 
@@ -107,5 +111,11 @@ public class Game implements Serializable {
 
 	public int getHeight() {
 		return height;
+	}
+	
+	public void addSprite(Sprite s){
+		sprites.add(s);
+		frame.add(s);
+		
 	}
 }
