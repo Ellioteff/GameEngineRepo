@@ -26,6 +26,7 @@ public abstract class Sprite extends JComponent {
 
 	@Override
 	protected void paintComponent(Graphics g) {
+		System.out.println("ritar sprite");
 		super.paintComponent(g);
 		g.drawImage(spriteImage, 0, 0, this);
 

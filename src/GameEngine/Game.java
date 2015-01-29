@@ -2,8 +2,12 @@ package GameEngine;
 
 import java.awt.*;
 import java.awt.image.*;
+import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 public class Game implements Serializable {
@@ -17,6 +21,7 @@ public class Game implements Serializable {
 	private boolean keepRunning;
 	private int tickCount;
 	private int[] pixels;
+	private ArrayList<Sprite> sprites = new ArrayList<Sprite>();
 
 	protected Game(String name, int width, int height) {
 
@@ -46,6 +51,18 @@ public class Game implements Serializable {
 		long lastTimer = System.currentTimeMillis();
 		double delta = 0;
 		boolean render = true;
+		
+		//testkod nedan
+		BufferedImage tempImage;
+		try {
+			tempImage = ImageIO.read(new File("D:/skola/GameEngineRepo/assets/silvia.png"));
+			frame.getContentPane().add(new DynamicSprite(50,50,0,0, tempImage));
+		} catch (IOException e) {
+			System.out.println("couldnt open file");
+		}
+		frame.repaint();
+		
+      
 
 		while (keepRunning != false) {
 			long present = System.nanoTime();
@@ -81,7 +98,7 @@ public class Game implements Serializable {
 	}
 
 	public void render() {
-		
+		frame.repaint();
 	}
 
 	public int getWidth() {
