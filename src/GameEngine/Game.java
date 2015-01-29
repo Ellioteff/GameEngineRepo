@@ -52,15 +52,6 @@ public class Game implements Serializable {
 		double delta = 0;
 		boolean render = true;
 		
-		BufferedImage tempImage;
-		try {
-			tempImage = ImageIO.read(new File("D:/skola/GameEngineRepo/assets/silvia.png"));
-			addSprite(new DynamicSprite(50,50,0,0, tempImage));
-		} catch (IOException e) {
-			System.out.println("couldnt open file");
-		}
-		frame.validate();
-		frame.repaint();
 		
 		
       
@@ -116,6 +107,8 @@ public class Game implements Serializable {
 	public void addSprite(Sprite s){
 		sprites.add(s);
 		frame.add(s);
+		frame.validate();
+		
 		
 	}
 }

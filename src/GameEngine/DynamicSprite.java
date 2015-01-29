@@ -8,9 +8,9 @@ import java.awt.image.BufferedImage;
 
 public class DynamicSprite extends Sprite {
 
-	public DynamicSprite(int width, int height, int x, int y, BufferedImage image) {
-
-		super(width,height,x,y,image);
+	public DynamicSprite(int width, int height, int x, int y, String imagePath) {
+		super(width,height,x,y,imagePath);
+		System.out.println("dynamic sprite konstruktor");
 
 	}
 	public void move() {

@@ -5,8 +5,11 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.geom.Area;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.*;
 
+import javax.imageio.ImageIO;
 import javax.swing.JComponent;
 
 public abstract class Sprite extends JComponent {
@@ -31,18 +34,28 @@ public abstract class Sprite extends JComponent {
 
 	}
 
-	protected Sprite(int width, int height, int x, int y, BufferedImage image) {
-
+	protected Sprite(int width, int height, int x, int y, String imagePath) {
+		
+		System.out.println("sprite konstruktor");
 		area = new Area(new Rectangle(width, height));
 		xPos = x;
 		yPos = y;
-		spriteImage = image;
-		spriteImageG2D = (Graphics2D) this.spriteImage.getGraphics();
+		addImage(imagePath);
 
 	}
 
 	public Graphics2D getSpriteG2D() {
 		return spriteImageG2D;
+	}
+	
+	private void addImage(String imagePath){
+		try {
+			spriteImage = ImageIO.read(new File(imagePath));
+			spriteImageG2D = (Graphics2D) this.spriteImage.getGraphics();
+			
+		} catch (IOException e) {
+			System.out.println("couldnt open/find file");
+		}
 	}
 
 	public abstract void move();
