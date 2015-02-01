@@ -34,12 +34,13 @@ public abstract class Sprite extends JComponent {
 
 	}
 
-	protected Sprite(int width, int height, int x, int y, String imagePath) {
+	protected Sprite(int width, int height, int x, int y, BufferedImage image) {
 		
 		spriteArea = new Rectangle(width, height);
 		xPos = x;
 		yPos = y;
-		addImage(imagePath);
+		spriteImage = image;
+		spriteImageG2D = (Graphics2D) this.spriteImage.getGraphics();
 
 	}
 
@@ -47,15 +48,7 @@ public abstract class Sprite extends JComponent {
 		return spriteImageG2D;
 	}
 	
-	private void addImage(String imagePath){
-		try {
-			spriteImage = ImageIO.read(new File(imagePath));
-			spriteImageG2D = (Graphics2D) this.spriteImage.getGraphics();
-			
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
+	
 
 	public abstract void move();
 	

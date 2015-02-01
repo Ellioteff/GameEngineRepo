@@ -1,6 +1,7 @@
 package TheGame;
 
 import GameEngine.DynamicSprite;
+import GameEngine.Loader;
 import GameEngine.SoundObject;
 
 public class SilviaSprite extends DynamicSprite {
@@ -11,14 +12,14 @@ public class SilviaSprite extends DynamicSprite {
 	int incrementY = 1;
 
 	public SilviaSprite() {
-		super(50, 50, 0, 0, "assets/sprites/Silvia.png");
+		super(50, 50, 0, 0, Loader.loadImage("assets/sprites/silvia.png"));
 	}
 
 	@Override
 	public void move() {
 		xPos += 1 * incrementX;
 		yPos += 1 * incrementY;
-		if (yPos < 1 || yPos >= 829) {
+		if (yPos < 1 || yPos >= 810) {
 
 			incrementY *= (-1);
 			boing.playSound();
