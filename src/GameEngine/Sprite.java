@@ -15,7 +15,7 @@ import javax.swing.JComponent;
 public abstract class Sprite extends JComponent {
 	private BufferedImage spriteImage;
 	private Graphics2D spriteImageG2D;
-	private Area area;
+	protected Rectangle spriteArea;
 	protected int xPos;
 	protected int yPos;
 
@@ -30,14 +30,13 @@ public abstract class Sprite extends JComponent {
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		g.drawImage(spriteImage, xPos, yPos, this);
+		g.drawImage(spriteImage, xPos, yPos,(int)spriteArea.getWidth(),(int)spriteArea.getHeight(), this);
 
 	}
 
 	protected Sprite(int width, int height, int x, int y, String imagePath) {
 		
-		System.out.println("sprite konstruktor");
-		area = new Area(new Rectangle(width, height));
+		spriteArea = new Rectangle(width, height);
 		xPos = x;
 		yPos = y;
 		addImage(imagePath);
@@ -54,10 +53,19 @@ public abstract class Sprite extends JComponent {
 			spriteImageG2D = (Graphics2D) this.spriteImage.getGraphics();
 			
 		} catch (IOException e) {
-			System.out.println("couldnt open/find file");
+			e.printStackTrace();
 		}
 	}
 
 	public abstract void move();
+	
+	public boolean equals(Object other){
+		if(other == null)
+			return false;
+		if (getClass() != other.getClass())
+	        return false;
+	    
+		return true;
+	}
 
 }

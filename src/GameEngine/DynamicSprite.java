@@ -10,12 +10,10 @@ public class DynamicSprite extends Sprite {
 
 	public DynamicSprite(int width, int height, int x, int y, String imagePath) {
 		super(width,height,x,y,imagePath);
-		System.out.println("dynamic sprite konstruktor");
 
 	}
 	public void move() {
-		xPos=+1;
-		System.out.println("moving");
+		xPos+=1;
 	}
 	
 	protected void paintComponent(Graphics g) {

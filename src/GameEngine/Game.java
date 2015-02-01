@@ -17,16 +17,16 @@ public class Game implements Serializable {
 	private JFrame frame;
 	private int width;
 	private int height;
-	
+
 	private boolean keepRunning;
 	private int tickCount;
 	private int[] pixels;
 	private ArrayList<Sprite> sprites = new ArrayList<Sprite>();
+	private ArrayList<GameObject> gameObjects = new ArrayList<GameObject>();
 
-	protected Game(String name, int width, int height) {
+	public Game(String name, int width, int height) {
 
 		keepRunning = true;
-		
 
 		frame = new JFrame(name);
 		frame.setMinimumSize(new Dimension(width, height));
@@ -51,10 +51,6 @@ public class Game implements Serializable {
 		long lastTimer = System.currentTimeMillis();
 		double delta = 0;
 		boolean render = true;
-		
-		
-		
-      
 
 		while (keepRunning != false) {
 			long present = System.nanoTime();
@@ -66,30 +62,30 @@ public class Game implements Serializable {
 				delta -= 1;
 				render = true;
 			}
-			try{
+			try {
 				Thread.sleep(2);
-			}catch(InterruptedException ie){
+			} catch (InterruptedException ie) {
 				ie.printStackTrace();
 			}
 			if (render) {
 				frames++;
 				render();
 			}
-			if(System.currentTimeMillis() - lastTimer >= 1000){
+			if (System.currentTimeMillis() - lastTimer >= 1000) {
 				lastTimer += 1000;
-				System.out.println(ticks + "  " +frames);
+				System.out.println(ticks + "  " + frames);
 				frames = 0;
 				ticks = 0;
 			}
-			for(Sprite s : sprites)
+			for (Sprite s : sprites)
 				s.move();
-			
+
 		}
 	}
 
 	private void tick() {
 		tickCount++;
-		
+
 	}
 
 	public void render() {
@@ -103,12 +99,16 @@ public class Game implements Serializable {
 	public int getHeight() {
 		return height;
 	}
-	
-	public void addSprite(Sprite s){
-		sprites.add(s);
-		frame.add(s);
+
+	public void addGameObject(GameObject go) {
+		gameObjects.add(go);
+		
+		if(go.hasSprite())
+		{
+			sprites.add(go.getSprite());
+		}
+		frame.add(go.getSprite());
 		frame.validate();
-		
-		
+
 	}
 }
