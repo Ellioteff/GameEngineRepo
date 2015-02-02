@@ -67,7 +67,7 @@ public class Game implements Serializable {
 		for (Sprite s : sprites) {
 			if (s.canCollide) {
 				for (Sprite s2 : sprites) {
-					if (s.canCollide) {
+					if (s2.canCollide) {
 						if (Physics.checkCollision(s, s2)) {
 							s.actOnCollision(s2);
 						}
