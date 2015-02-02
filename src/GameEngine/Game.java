@@ -32,8 +32,6 @@ public class Game implements Serializable {
 
 		update();
 
-		
-
 	}
 
 	private void moveSprites() {
@@ -65,6 +63,21 @@ public class Game implements Serializable {
 		return height;
 	}
 
+	private void checkForCollisions() {
+		for (Sprite s : sprites) {
+			if (s.canCollide) {
+				for (Sprite s2 : sprites) {
+					if (s.canCollide) {
+						if (Physics.checkCollision(s, s2)) {
+							s.actOnCollision(s2);
+						}
+					}
+				}
+			}
+		}
+
+	}
+
 	public void update() {
 		long currentTime = System.nanoTime();
 		double nsPerTick = 1000000000D / Fps;
@@ -83,7 +96,7 @@ public class Game implements Serializable {
 			}
 
 			try {
-				Thread.sleep(3);
+				Thread.sleep(10);
 				if (System.currentTimeMillis() - lastTimer >= 1000) {
 					lastTimer += 1000;
 				}
@@ -91,12 +104,14 @@ public class Game implements Serializable {
 				ie.printStackTrace();
 			}
 			moveSprites();
+			checkForCollisions();
 		}
-		
+
 	}
-	public void setup(){
+
+	public void setup() {
 		keepRunning = true;
-		keyHandler.bindKey(frame);
+		// keyHandler.bindKey(frame);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLayout(new BorderLayout());
 		frame.pack();
@@ -115,5 +130,5 @@ public class Game implements Serializable {
 		frame.validate();
 
 	}
-	 
+
 }
