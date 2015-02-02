@@ -19,7 +19,7 @@ public class Game implements Serializable {
 	private int height;
 
 	private boolean keepRunning;
-	private int tickCount;
+	private double Fps = 60D;
 	private ArrayList<Sprite> sprites = new ArrayList<Sprite>();
 	private ArrayList<GameObject> gameObjects = new ArrayList<GameObject>();
 
@@ -43,27 +43,31 @@ public class Game implements Serializable {
 
 	public void run() {
 
-		long lastTime = System.nanoTime();
-		double nsPerTick = 1000000000D / 60D;
+		long currentTime = System.nanoTime();
+		double nsPerTick = 100000000D / Fps;
 		long lastTimer = System.currentTimeMillis();
 		double delta = 0;
 
 		while (keepRunning != false) {
 			long present = System.nanoTime();
-			delta += (present - lastTime) / nsPerTick;
-			lastTime = present;
+			delta += (present - currentTime) / nsPerTick;
+			currentTime = present;
 			while (delta >= 1) {
+
 				delta -= 1;
 				render();
+
 			}
+
 			try {
-				Thread.sleep(2);
+				Thread.sleep(3);
 				if (System.currentTimeMillis() - lastTimer >= 1000) {
 					lastTimer += 1000;
 				}
 			} catch (InterruptedException ie) {
 				ie.printStackTrace();
 			}
+<<<<<<< Updated upstream
 			moveSprites();
 		}
 	}
@@ -71,6 +75,23 @@ public class Game implements Serializable {
 		for (Sprite s : sprites)
 			s.move();
 	}
+=======
+
+			for (Sprite s : sprites)
+				s.move();
+
+		}
+	}
+
+	public double getFps() {
+		return Fps;
+	}
+
+	public void setFps(double fps) {
+		this.Fps = fps;
+	}
+
+>>>>>>> Stashed changes
 	public void render() {
 		frame.repaint();
 	}
@@ -85,9 +106,8 @@ public class Game implements Serializable {
 
 	public void addGameObject(GameObject go) {
 		gameObjects.add(go);
-		
-		if(go.hasSprite())
-		{
+
+		if (go.hasSprite()) {
 			sprites.add(go.getSprite());
 		}
 		frame.add(go.getSprite());
