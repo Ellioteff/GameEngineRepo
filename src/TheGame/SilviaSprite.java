@@ -18,6 +18,14 @@ public class SilviaSprite extends DynamicSprite {
 
 	@Override
 	public void move() {
+		xPos+=xVelocity;
+		yPos+=yVelocity;
+		moveBouncing();
+
+	}
+	
+	private void moveBouncing(){
+		
 		xPos += 1 * incrementX;
 		yPos += 1 * incrementY;
 		if (yPos < 1 || yPos >= 810) {
@@ -29,7 +37,6 @@ public class SilviaSprite extends DynamicSprite {
 			incrementX *= (-1);
 			boing.playSound();
 		}
-
 	}
 
 }

@@ -16,8 +16,8 @@ public abstract class Sprite extends JComponent {
 	private BufferedImage spriteImage;
 	private Graphics2D spriteImageG2D;
 	protected Rectangle spriteArea;
-	protected int xPos;
-	protected int yPos;
+	protected double xPos;
+	protected double yPos;
 
 	public Sprite() {
 
@@ -30,12 +30,14 @@ public abstract class Sprite extends JComponent {
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		g.drawImage(spriteImage, xPos, yPos,(int)spriteArea.getWidth(),(int)spriteArea.getHeight(), this);
+		int x = (int) Math.round(xPos);
+		int y = (int) Math.round(yPos);
+		g.drawImage(spriteImage, x, y, (int) spriteArea.getWidth(), (int) spriteArea.getHeight(), this);
 
 	}
 
 	protected Sprite(int width, int height, int x, int y, BufferedImage image) {
-		
+
 		spriteArea = new Rectangle(width, height);
 		xPos = x;
 		yPos = y;
@@ -47,17 +49,15 @@ public abstract class Sprite extends JComponent {
 	public Graphics2D getSpriteG2D() {
 		return spriteImageG2D;
 	}
-	
-	
 
 	public abstract void move();
-	
-	public boolean equals(Object other){
-		if(other == null)
+
+	public boolean equals(Object other) {
+		if (other == null)
 			return false;
 		if (getClass() != other.getClass())
-	        return false;
-	    
+			return false;
+
 		return true;
 	}
 

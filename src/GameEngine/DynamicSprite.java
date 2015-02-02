@@ -7,14 +7,13 @@ import java.awt.geom.Area;
 import java.awt.image.BufferedImage;
 
 public class DynamicSprite extends Sprite {
-	double yVelocity = 0;
-	double xVelocity = 0;
+	protected double yVelocity = 0;
+	protected double xVelocity = 0;
 	public DynamicSprite(int width, int height, int x, int y, BufferedImage image) {
 		super(width,height,x,y,image);
 
 	}
 	public void move() {
-		xPos+=1;
 	}
 	
 	protected void paintComponent(Graphics g) {
