@@ -5,9 +5,10 @@ import GameEngine.Loader;
 import GameEngine.SoundObject;
 
 public class SilviaSprite extends DynamicSprite {
-	SoundObject sound = new SoundObject("assets/sounds/Transformer Stingers 01 A.wav");
-	SoundObject boing = new SoundObject("assets/sounds/61847__simon-rue__boink-v3.wav");
-	int soundCounter = 0;
+
+	private static final long serialVersionUID = 1L;
+	SoundObject sound = new SoundObject(Loader.loadSound("assets/sounds/Transformer Stingers 01 A.wav"));
+	SoundObject boing = new SoundObject(Loader.loadSound("assets/sounds/61847__simon-rue__boink-v3.wav"));
 	int incrementX = 1;
 	int incrementY = 1;
 
@@ -28,9 +29,6 @@ public class SilviaSprite extends DynamicSprite {
 			incrementX *= (-1);
 			boing.playSound();
 		}
-		/*soundCounter++;
-		if (soundCounter == 1)
-			sound.playSound();*/
 
 	}
 
