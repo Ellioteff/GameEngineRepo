@@ -1,13 +1,10 @@
 package GameEngine;
 
 import java.awt.*;
-import java.awt.image.*;
-import java.io.File;
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import javax.imageio.ImageIO;
+
 import javax.swing.*;
 
 public class Game implements Serializable {
@@ -44,7 +41,7 @@ public class Game implements Serializable {
 	public void run() {
 
 		long currentTime = System.nanoTime();
-		double nsPerTick = 100000000D / Fps;
+		double nsPerTick = 1000000000D / Fps;
 		long lastTimer = System.currentTimeMillis();
 		double delta = 0;
 
@@ -67,20 +64,19 @@ public class Game implements Serializable {
 			} catch (InterruptedException ie) {
 				ie.printStackTrace();
 			}
-<<<<<<< Updated upstream
+
 			moveSprites();
 		}
 	}
 	private void moveSprites(){
 		for (Sprite s : sprites)
 			s.move();
-	}
-=======
+	
 
 			for (Sprite s : sprites)
 				s.move();
 
-		}
+		
 	}
 
 	public double getFps() {
@@ -91,7 +87,7 @@ public class Game implements Serializable {
 		this.Fps = fps;
 	}
 
->>>>>>> Stashed changes
+
 	public void render() {
 		frame.repaint();
 	}
