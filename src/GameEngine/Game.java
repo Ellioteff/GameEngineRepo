@@ -1,6 +1,7 @@
 package GameEngine;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -95,7 +96,7 @@ public class Game implements Serializable {
 	}
 	public void setup(){
 		keepRunning = true;
-
+		keyHandler.bindKey(frame);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLayout(new BorderLayout());
 		frame.pack();
@@ -114,4 +115,5 @@ public class Game implements Serializable {
 		frame.validate();
 
 	}
+	 
 }
