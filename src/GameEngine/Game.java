@@ -20,7 +20,6 @@ public class Game implements Serializable {
 
 	private boolean keepRunning;
 	private int tickCount;
-	private int[] pixels;
 	private ArrayList<Sprite> sprites = new ArrayList<Sprite>();
 	private ArrayList<GameObject> gameObjects = new ArrayList<GameObject>();
 
@@ -46,46 +45,30 @@ public class Game implements Serializable {
 
 		long lastTime = System.nanoTime();
 		double nsPerTick = 1000000000D / 60D;
-		int ticks = 0;
-		int frames = 0;
 		long lastTimer = System.currentTimeMillis();
 		double delta = 0;
-		boolean render = true;
 
 		while (keepRunning != false) {
 			long present = System.nanoTime();
 			delta += (present - lastTime) / nsPerTick;
 			lastTime = present;
 			while (delta >= 1) {
-				ticks++;
-				tick();
 				delta -= 1;
-				render = true;
+				render();
 			}
 			try {
 				Thread.sleep(2);
+				if (System.currentTimeMillis() - lastTimer >= 1000) {
+					lastTimer += 1000;
+				}
 			} catch (InterruptedException ie) {
 				ie.printStackTrace();
 			}
-			if (render) {
-				frames++;
-				render();
-			}
-			if (System.currentTimeMillis() - lastTimer >= 1000) {
-				lastTimer += 1000;
-				System.out.println(ticks + "  " + frames);
-				frames = 0;
-				ticks = 0;
-			}
+			
 			for (Sprite s : sprites)
 				s.move();
 
 		}
-	}
-
-	private void tick() {
-		tickCount++;
-
 	}
 
 	public void render() {
