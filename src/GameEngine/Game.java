@@ -64,13 +64,13 @@ public class Game implements Serializable {
 			} catch (InterruptedException ie) {
 				ie.printStackTrace();
 			}
-			
-			for (Sprite s : sprites)
-				s.move();
-
+			moveSprites();
 		}
 	}
-
+	private void moveSprites(){
+		for (Sprite s : sprites)
+			s.move();
+	}
 	public void render() {
 		frame.repaint();
 	}
