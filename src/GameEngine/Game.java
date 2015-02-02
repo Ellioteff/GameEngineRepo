@@ -4,7 +4,6 @@ import java.awt.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-
 import javax.swing.*;
 
 public class Game implements Serializable {
@@ -22,24 +21,50 @@ public class Game implements Serializable {
 
 	public Game(String name, int width, int height) {
 
-		keepRunning = true;
-
 		frame = new JFrame(name);
-		frame.setMinimumSize(new Dimension(width, height));
-		frame.setMaximumSize(new Dimension(width, height));
 		frame.setPreferredSize(new Dimension(width, height));
-
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setLayout(new BorderLayout());
-		frame.pack();
-		frame.setResizable(false);
-		frame.setLocationRelativeTo(null);
-		frame.setVisible(true);
+		setup();
 
 	}
 
 	public void run() {
 
+		update();
+
+		
+
+	}
+
+	private void moveSprites() {
+		for (Sprite s : sprites)
+			s.move();
+
+		for (Sprite s : sprites)
+			s.move();
+
+	}
+
+	public double getFps() {
+		return Fps;
+	}
+
+	public void setFps(double fps) {
+		this.Fps = fps;
+	}
+
+	public void render() {
+		frame.repaint();
+	}
+
+	public int getWidth() {
+		return width;
+	}
+
+	public int getHeight() {
+		return height;
+	}
+
+	public void update() {
 		long currentTime = System.nanoTime();
 		double nsPerTick = 1000000000D / Fps;
 		long lastTimer = System.currentTimeMillis();
@@ -64,40 +89,19 @@ public class Game implements Serializable {
 			} catch (InterruptedException ie) {
 				ie.printStackTrace();
 			}
-
 			moveSprites();
 		}
-	}
-	private void moveSprites(){
-		for (Sprite s : sprites)
-			s.move();
-	
-
-			for (Sprite s : sprites)
-				s.move();
-
 		
 	}
+	public void setup(){
+		keepRunning = true;
 
-	public double getFps() {
-		return Fps;
-	}
-
-	public void setFps(double fps) {
-		this.Fps = fps;
-	}
-
-
-	public void render() {
-		frame.repaint();
-	}
-
-	public int getWidth() {
-		return width;
-	}
-
-	public int getHeight() {
-		return height;
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setLayout(new BorderLayout());
+		frame.pack();
+		frame.setResizable(false);
+		frame.setLocationRelativeTo(null);
+		frame.setVisible(true);
 	}
 
 	public void addGameObject(GameObject go) {
