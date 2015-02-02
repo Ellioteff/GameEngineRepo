@@ -37,10 +37,6 @@ public class Game implements Serializable {
 	private void moveSprites() {
 		for (Sprite s : sprites)
 			s.move();
-
-		for (Sprite s : sprites)
-			s.move();
-
 	}
 
 	public double getFps() {
@@ -96,7 +92,7 @@ public class Game implements Serializable {
 			}
 
 			try {
-				Thread.sleep(10);
+				Thread.sleep(3);
 				if (System.currentTimeMillis() - lastTimer >= 1000) {
 					lastTimer += 1000;
 				}
