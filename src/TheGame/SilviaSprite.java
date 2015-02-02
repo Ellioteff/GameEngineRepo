@@ -1,7 +1,10 @@
 package TheGame;
 
+import java.awt.Rectangle;
+
 import GameEngine.DynamicSprite;
 import GameEngine.Loader;
+import GameEngine.Physics;
 import GameEngine.SoundObject;
 
 public class SilviaSprite extends DynamicSprite {
@@ -12,30 +15,34 @@ public class SilviaSprite extends DynamicSprite {
 	int incrementX = 1;
 	int incrementY = 1;
 
-	public SilviaSprite() {
-		super(50, 50, 0, 0, Loader.loadImage("assets/sprites/silvia.png"));
+	public SilviaSprite(int x, int y) {
+		super(50, 50, x, y, Loader.loadImage("assets/sprites/Silvia.png"));
+		xVelocity = 2;
+		
 	}
 
 	@Override
 	public void move() {
-		xPos+=xVelocity;
-		yPos+=yVelocity;
-		moveBouncing();
+		xPos += xVelocity * incrementX;
+		yPos += yVelocity;		
+		xVelocity = Physics.applyAirResistance(xVelocity, 10);
+		if (yPos < 790)
+			yVelocity = Physics.applyGravity(yVelocity);
 
-	}
-	
-	private void moveBouncing(){
-		
-		xPos += 1 * incrementX;
-		yPos += 1 * incrementY;
-		if (yPos < 1 || yPos >= 810) {
-
-			incrementY *= (-1);
-			boing.playSound();
+		if (yPos > 800) {
+			if (yVelocity > 0.2) {
+				yVelocity = -(yVelocity * 0.9 - 0.2);
+				boing.playSound();
+			} else {
+				boing.playSound();
+				yVelocity = 0;
+			}
 		}
+		if (yPos > 800)
+			yPos = 800;
+
 		if (xPos < 1 || xPos >= 1190) {
 			incrementX *= (-1);
-			boing.playSound();
 		}
 	}
 
