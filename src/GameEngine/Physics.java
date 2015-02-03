@@ -56,7 +56,6 @@ public class Physics {
 			}
 
 		}
-		System.out.println("no collision");
 		return false;
 	}
 }
