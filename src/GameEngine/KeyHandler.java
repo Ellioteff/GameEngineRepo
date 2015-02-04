@@ -1,4 +1,5 @@
 package GameEngine;
+
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
@@ -6,57 +7,90 @@ import javax.swing.ActionMap;
 import javax.swing.InputMap;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
-import GameEngine.Keys;
+import javax.swing.KeyStroke;
 
+public class KeyHandler {
 
-public class keyHandler {
+	private static String text;
+	private static KeyStroke keyStroke;
 
-	static void bindKey(JFrame frame){
-		
-		ActionMap actionMap = frame.getRootPane().getActionMap();
-        InputMap inputMap = frame.getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+	public KeyHandler(String text, KeyStroke keyStroke) {
 
-        for (Keys direction : Keys.values())
-        {
-            actionMap.put(direction.getText(), new KeyBinding(direction.getText()));
-            inputMap.put(direction.getKeyStroke(), direction.getText());
-        }
-        frame.getRootPane().setActionMap(actionMap);
-        frame.getRootPane().setInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW, inputMap);
+		KeyHandler.text = text;
+		KeyHandler.keyStroke = keyStroke;
+		ActionMap actionMap = Game.getFrame().getRootPane().getActionMap();
+		InputMap inputMap = Game.getFrame().getRootPane()
+				.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+		bindKeys(actionMap, inputMap, Game.getFrame());
+		addAction(text);
+
 	}
+
+	private static String addAction(String text) {
+				
+		return text;
+	}
+
+	public static void bindKeys(ActionMap actionMap, InputMap inputMap,
+			JFrame frame) {
+
+		actionMap.put(getText(), new KeyBinding(getText()));
+		inputMap.put(getKeyStroke(), getText());
+
+		frame.getRootPane().setActionMap(actionMap);
+		frame.getRootPane().setInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW,
+				inputMap);
+	}
+
+	public static String getText() {
+		return text;
+	}
+
+	public static KeyStroke getKeyStroke() {
+		return keyStroke;
+	}
+
 	private static class KeyBinding extends AbstractAction {
 
-        private static final long serialVersionUID = 1L;
+		private static final long serialVersionUID = 1L;
 
-        public KeyBinding(String text){
-            super(text);
-            putValue(ACTION_COMMAND_KEY, text);
-        }
+		public KeyBinding(String text) {
+			super(text);
+			putValue(ACTION_COMMAND_KEY, text);
+		}
 
-        @Override
-        public void actionPerformed(ActionEvent e)
-        {
-        	String action = e.getActionCommand();
-            switch(action){
-            
-            case "Space": 
-            	System.out.println("Space");
-            	break;
-            case "Up": 
-            	
-            	break;
-            case "Down": 
-            	
-            	break;
-            case "Left": 
-            	
-            	break;
-            case "Right": 
-            	
-            	break;
-            	
-            }
-        }
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			
+			String action = e.getActionCommand();
+			//int str = (int) addAction(action);
+			//System.out.println(action);
+			
+			switch (action) {
 
-    }
+			case "Space":
+				System.out.println("space");
+				break;
+			case "Up":
+				System.out.println("up");
+				break;
+			case "Down":
+				System.out.println("down");
+				break;
+			case "Left":
+				System.out.println("left");
+				break;
+			case "Right":
+				System.out.println("right");
+				break;
+			case "Escape":
+				System.exit(0);
+				break;
+			default: 
+				break;
+			}
+		}
+
+	}
+
 }
