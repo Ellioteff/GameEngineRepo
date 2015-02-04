@@ -27,13 +27,8 @@ public class Main {
 		new KeyHandler("Space", KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0));
 		new KeyHandler("Return", KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0));
 		
-		SilviaSprite s1 = new SilviaSprite(50,0);
-		s1.addHitbox(20,0,30,10);
-		game.addGameObject(new GameObject(s1));
-		
-		SilviaSprite s = new SilviaSprite(85,50);
-		s.addHitbox(0,0,20,20);
-		game.addGameObject(new GameObject(s));
+		game.addGameObject(new GameObject(new SilviaSprite(85,50)));
+		game.addGameObject(new GameObject(new Ground()));
 		
 		game.run();
 	}
