@@ -2,7 +2,7 @@ package GameEngine;
 
 public class GameObject {
 	private String name;
-	private Sprite sprite;
+	protected Sprite sprite;
 	private boolean hasSprite = false;
 
 	public GameObject() {
