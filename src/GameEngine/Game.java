@@ -1,18 +1,22 @@
 package GameEngine;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.swing.*;
 
-public class Game implements Serializable {
+public class Game implements Serializable, KeyListener {
 
 	private static final long serialVersionUID = 1L;
 
-	private static JFrame frame;
+	private JFrame frame;
 	private int width;
 	private int height;
+	private PlayerObject player;
 
 	private boolean keepRunning;
 	private double Fps = 60D;
@@ -22,16 +26,19 @@ public class Game implements Serializable {
 	double delta = 0;
 	private ArrayList<DynamicSprite> dynamicSprites = new ArrayList<DynamicSprite>();
 	private ArrayList<StaticSprite> staticSprites = new ArrayList<StaticSprite>();
+	
+	public HashMap<Integer, Key> keyBindings = new HashMap<Integer, Key>();
 
 	private ArrayList<GameObject> gameObjects = new ArrayList<GameObject>();
 
-	public Game(String name, int width, int height) {
+	public Game(String name, int width, int height, PlayerObject p) {
+		  player = p;
+		  frame = new JFrame(name);
+		  frame.setPreferredSize(new Dimension(width, height));
+		  setup();
+		  addGameObject(p);
 
-		frame = new JFrame(name);
-		frame.setPreferredSize(new Dimension(width, height));
-		setup();
-
-	}
+		 }
 
 	public void run() {
 
@@ -78,10 +85,6 @@ public class Game implements Serializable {
 		frame.repaint();
 	}
 
-	public static JFrame getFrame() {
-		return frame;
-	}
-
 	public int getWidth() {
 		return width;
 	}
@@ -102,6 +105,8 @@ public class Game implements Serializable {
 
 	public void setup() {
 		keepRunning = true;
+		frame.setFocusable(true);
+		frame.addKeyListener(this);		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLayout(new BorderLayout());
 		frame.pack();
@@ -124,4 +129,52 @@ public class Game implements Serializable {
 
 	}
 
+	
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		
+		
+	    keyBindings.get(e.getKeyCode()).isDown = true;
+	    
+	    if(Key.up.isDown);
+	    
+	    
+
+	}
+
+	public void bind(Integer keyCode, Key key) {
+		keyBindings.put(keyCode, key);
+	}
+	public boolean isKeyBound(int extendedKey){
+	    return keyBindings.containsKey(extendedKey);
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+	
+	    keyBindings.get(e.getKeyCode()).isDown = false;
+
+	}
+
+	public static class Key {
+		
+		public boolean isDown;
+		
+		public static Key right = new Key();
+		public static Key up = new Key();
+		public static Key down = new Key();
+		public static Key left = new Key();
+		public static Key space = new Key();
+
+		public void toggle() {
+			isDown = !isDown;
+		}
+
+		
+	}
+	
+	
+	public void keyTyped(KeyEvent e) {
+	}
 }
