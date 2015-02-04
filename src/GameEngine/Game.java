@@ -10,7 +10,7 @@ public class Game implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private JFrame frame;
+	private static JFrame frame;
 	private int width;
 	private int height;
 
@@ -20,7 +20,9 @@ public class Game implements Serializable {
 	double nsPerTick = 1000000000D / Fps;
 	long lastTimer = System.currentTimeMillis();
 	double delta = 0;
-	private ArrayList<Sprite> sprites = new ArrayList<Sprite>();
+	private ArrayList<DynamicSprite> dynamicSprites = new ArrayList<DynamicSprite>();
+	private ArrayList<StaticSprite> staticSprites = new ArrayList<StaticSprite>();
+
 	private ArrayList<GameObject> gameObjects = new ArrayList<GameObject>();
 
 	public Game(String name, int width, int height) {
@@ -40,7 +42,7 @@ public class Game implements Serializable {
 			while (delta >= 1) {
 
 				delta -= 1;
-				render();
+				// render();
 
 			}
 
@@ -54,12 +56,13 @@ public class Game implements Serializable {
 			}
 			moveSprites();
 			checkForCollisions();
+			render();
 		}
 
 	}
 
 	private void moveSprites() {
-		for (Sprite s : sprites)
+		for (DynamicSprite s : dynamicSprites)
 			s.move();
 	}
 
@@ -75,6 +78,10 @@ public class Game implements Serializable {
 		frame.repaint();
 	}
 
+	public static JFrame getFrame() {
+		return frame;
+	}
+
 	public int getWidth() {
 		return width;
 	}
@@ -84,23 +91,17 @@ public class Game implements Serializable {
 	}
 
 	private void checkForCollisions() {
-		for (Sprite s : sprites) {
-			if (s.canCollide) {
-				for (Sprite s2 : sprites) {
-					if (s2.canCollide) {
-						if (Physics.checkCollision(s, s2)) {
-							s.actOnCollision(s2);
-						}
-					}
+		for (DynamicSprite s : dynamicSprites) {
+			for (DynamicSprite s2 : dynamicSprites) {
+				if (Physics.checkCollision(s, s2)) {
+					s.actOnCollision(s2);
 				}
 			}
 		}
-
 	}
 
 	public void setup() {
 		keepRunning = true;
-		keyHandler.bindKey(frame);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLayout(new BorderLayout());
 		frame.pack();
@@ -113,9 +114,12 @@ public class Game implements Serializable {
 		gameObjects.add(go);
 
 		if (go.hasSprite()) {
-			sprites.add(go.getSprite());
+			if (go.getSprite() instanceof DynamicSprite)
+				dynamicSprites.add((DynamicSprite) go.getSprite());
+			else if (go.getSprite() instanceof StaticSprite)
+				staticSprites.add((StaticSprite) go.getSprite());
+			frame.add(go.getSprite());
 		}
-		frame.add(go.getSprite());
 		frame.validate();
 
 	}
