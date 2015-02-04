@@ -43,8 +43,8 @@ public class PlayerSprite extends DynamicSprite {
 	@Override
 	public void move() {
 		loopCounter++;
-		if (loopCounter % 100 == 0)
-			jump();
+//		if (loopCounter % 100 == 0)
+//			jump();
 		if(loopCounter % 500 == 0)
 			xVelocity = 1;
 		this.setPrevious();

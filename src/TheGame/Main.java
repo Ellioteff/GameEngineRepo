@@ -1,24 +1,28 @@
 package TheGame;
 
 import java.awt.event.KeyEvent;
-import GameEngine.PlayerObject;
-import GameEngine.PlayerSprite;
+
 import GameEngine.*;
-import GameEngine.Game.Key;
 
 public class Main {
 
 	public static void main(String[] args) {
 
 		PlayerSprite ps = new PlayerSprite(50, 50, "assets/sprites/Silvia.png");
-		PlayerObject po = new PlayerObject(ps);
-		Game game = new Game("Window", 1240, 880, po);
-
-		game.bind(KeyEvent.VK_UP, Key.up);
-		game.bind(KeyEvent.VK_LEFT, Key.left);
-		game.bind(KeyEvent.VK_DOWN, Key.down);
-		game.bind(KeyEvent.VK_RIGHT, Key.right);
-		game.bind(KeyEvent.VK_SPACE, Key.space);
+		PlayerObject po = new PlayerObject(ps);		
+		
+		Game game = new Game("Best Game EU", 1240, 880, po);
+		
+		game.bindKey(KeyEvent.VK_LEFT, new KeyBinding(() -> {
+			ps.move();
+		} ));
+		game.bindKey(KeyEvent.VK_RIGHT, new KeyBinding(() -> {
+			ps.move();
+		} ));
+		game.bindKey(KeyEvent.VK_SPACE, new KeyBinding(() -> {
+			ps.jump();
+		} ) );
+		
 
 		
 		game.addGameObject(new GameObject(new Ground()));

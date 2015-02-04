@@ -28,11 +28,11 @@ public class DynamicSprite extends Sprite {
 	}
 
 	protected void stepBackFromCollision() {
-		System.out.println(yPos+" - " + previousY);
+		//System.out.println(yPos+" - " + previousY);
 		yPos = (long)previousY-1;
 		yVelocity = 0;
 		onGround = true;
-		System.out.println("stepping back");
+		//System.out.println("stepping back");
 	}
 
 	public ArrayList<Rectangle> getHitbox() {
