@@ -50,22 +50,29 @@ public class GameObject implements Serializable {
 	public int getId() {
 		return id;
 	}
-	
+
 	@Override
 	public boolean equals(Object other) {
+		if (other instanceof GameObject) {
+			GameObject go = (GameObject) other;
+			return this.equals(go);
+
+		}
+
 		return false;
 	}
-	
-	public boolean equals(GameObject other){
-		if(id == other.getId())
+
+	public boolean equals(GameObject other) {
+		if (id == other.getId())
 			return true;
 		return false;
-		
+
 	}
-	public String toString(){
-		String s = ""+id;
-		if(hasSprite)
-			s+="\n"+sprite.toString();
+
+	public String toString() {
+		String s = "" + id;
+		if (hasSprite)
+			s += "\n" + sprite.toString();
 		return s;
 	}
 }

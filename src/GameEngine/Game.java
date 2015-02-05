@@ -3,6 +3,7 @@ package GameEngine;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.WindowEvent;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -112,6 +113,11 @@ public class Game implements Serializable, KeyListener {
 			if (go.hasSprite() && go.getSprite().getHealth() <= 0) {
 				temp.add(go);
 			}
+		}		
+		if(temp.contains(player)){
+			System.out.println("You lost");
+			render.dispatchEvent(new WindowEvent(render, WindowEvent.WINDOW_CLOSING));
+
 		}
 		for (GameObject go : temp) {
 			gameObjects.remove(go);
