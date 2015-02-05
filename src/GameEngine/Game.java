@@ -15,11 +15,10 @@ public class Game implements Serializable, KeyListener {
 	private PlayerObject player;
 	private boolean keepRunning;
 
-	private double Fps = 60D;
+	private int Fps = 60;
 	long currentTime = System.nanoTime();
-	double nsPerTick = 1000000000D / Fps;
-	long lastTimer = System.currentTimeMillis();
-	double delta = 0;
+	long nsPerTick = (1000000000 / Fps);
+
 	private HashMap<Integer, KeyBinding> keysPressed = new HashMap<>();
 	private HashMap<Integer, KeyBinding> keysReleased = new HashMap<>();
 
@@ -50,7 +49,9 @@ public class Game implements Serializable, KeyListener {
 		HashMap<Integer, Point> spritePositions = new HashMap<>();
 		for (GameObject go : gameObjects) {
 			if (go.hasSprite()) {
-				Point p = new Point((int) go.getSprite().getxPos(), (int) go.getSprite().getyPos());
+				Point p = new Point((int) go.getSprite().getxPos(), (int) go
+						.getSprite().getyPos());
+				System.out.println(p);
 				spritePositions.put(go.getId(), p);
 
 			}
@@ -82,29 +83,27 @@ public class Game implements Serializable, KeyListener {
 		while (keepRunning != false) {
 
 			long present = System.nanoTime();
-			delta += (present - currentTime) / nsPerTick;
+			long updateLength = present - currentTime;
 			currentTime = present;
+			double delta = updateLength / ((double) nsPerTick);
+System.out.println(delta);
+			moveSprites(delta);
+			checkForCollisions();
+			removeDeadObjects();
+			render();
 
 			try {
-				Thread.sleep(3);
-				if (System.currentTimeMillis() - lastTimer >= 1.67) {
-					lastTimer += 1.67;
-					moveSprites();
-					checkForCollisions();
-					removeDeadObjects();
-					render();
-				}
+				Thread.sleep((currentTime - present + nsPerTick) / 1000000);
 			} catch (InterruptedException ie) {
 				ie.printStackTrace();
 			}
-
 		}
 
 	}
 
-	private void moveSprites() {
+	private void moveSprites(double delta) {
 		for (DynamicSprite s : dynamicSprites)
-			s.move();
+			s.move(delta);
 	}
 
 	private void removeDeadObjects() {
@@ -113,10 +112,11 @@ public class Game implements Serializable, KeyListener {
 			if (go.hasSprite() && go.getSprite().getHealth() <= 0) {
 				temp.add(go);
 			}
-		}		
-		if(temp.contains(player)){
+		}
+		if (temp.contains(player)) {
 			System.out.println("You lost");
-			render.dispatchEvent(new WindowEvent(render, WindowEvent.WINDOW_CLOSING));
+			render.dispatchEvent(new WindowEvent(render,
+					WindowEvent.WINDOW_CLOSING));
 
 		}
 		for (GameObject go : temp) {
@@ -128,7 +128,7 @@ public class Game implements Serializable, KeyListener {
 
 	}
 
-	public void setFps(double fps) {
+	public void setFps(int fps) {
 		this.Fps = fps;
 	}
 

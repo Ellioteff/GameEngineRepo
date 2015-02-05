@@ -4,7 +4,7 @@ import java.awt.Rectangle;
 
 public class Physics {
 	static final double TERMINAL_VELOCITY = 5;
-	static final double GRAVITY = 0.015;
+	static final double GRAVITY = 0.05;
 
 	public static double applyAirResistance(double xVelocity, int force) {
 		if (xVelocity > 0.01)

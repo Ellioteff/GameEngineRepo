@@ -79,7 +79,7 @@ public class DynamicSprite extends Sprite {
 	}
 		
 	
-	public void move() {
+	public void move(double delta) {
 		this.setPrevious();
 		xPos += xVelocity;
 		yPos += yVelocity;

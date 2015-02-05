@@ -22,21 +22,21 @@ public class SimpleEnemy extends DynamicSprite {
 
 	public void jump() {
 		if (onGround) {
-			yVelocity = -2;
+			yVelocity = -4;
 			onGround = false;
 		}
 	}
 
 	@Override
-	public void move() {
-		super.move();
+	public void move(double delta) {
+		super.move(delta);
 		if (!onGround) {
 			yVelocity = Physics.applyGravity(yVelocity);
 		} else {
 			int i  = rand.nextInt(100);
 			if(i == 20)
 				jump();
-			xVelocity = -1;
+			xVelocity = -2*delta;
 		}
 		
 	}

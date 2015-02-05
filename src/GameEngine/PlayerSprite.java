@@ -20,28 +20,28 @@ public class PlayerSprite extends DynamicSprite {
 
 	public void jump() {
 		if (onGround) {
-			yVelocity = -2;
+			yVelocity = -4;
 			onGround = false;
 		}
 	}
 
-	private void walkRight() {
+	private void walkRight(double delta) {
 		if (onGround) {
 			if (xVelocity < 2)
-				xVelocity += 0.05;
+				xVelocity += 0.25*delta;
 		} else {
 			if (xVelocity < 2)
-				xVelocity += 0.02;
+				xVelocity += 0.22*delta;
 		}
 	}
 
-	private void walkLeft() {
+	private void walkLeft(double delta) {
 		if (onGround) {
 			if (xVelocity > -2)
-				xVelocity -= 0.05;
+				xVelocity -= 0.25*delta;
 		} else {
 			if (xVelocity > -2)
-				xVelocity -= 0.02;
+				xVelocity -= 0.22*delta;
 		}
 	}
 
@@ -62,12 +62,12 @@ public class PlayerSprite extends DynamicSprite {
 	}
 
 	@Override
-	public void move() {
+	public void move(double delta) {
 		if (leftDown)
-			walkLeft();
+			walkLeft(delta);
 		if (rightDown)
-			walkRight();
-		super.move();
+			walkRight(delta);
+		super.move(delta);
 		if (onGround)
 			xVelocity = Physics.applyAirResistance(xVelocity, 20);
 		else
