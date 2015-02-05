@@ -10,10 +10,6 @@ import java.util.HashMap;
 public class Game implements Serializable, KeyListener {
 
 	private static final long serialVersionUID = 1L;
-
-	
-	private int width;
-	private int height;
 	private Renderer render;
 	private PlayerObject player;
 	private boolean keepRunning;
@@ -35,8 +31,6 @@ public class Game implements Serializable, KeyListener {
 
 	public Game(String name, int width, int height, PlayerObject p) {
 		this.player = p;	
-		this.width = width;
-		this.height = height;
 		this.render = new Renderer(name, width, height);
 		render.addKeyListener(this);		
 		keepRunning = true;
@@ -93,11 +87,11 @@ public class Game implements Serializable, KeyListener {
 	}
 
 	public int getWidth() {
-		return width;
+		return render.getWidth();
 	}
 
 	public int getHeight() {
-		return height;
+		return render.getHeight();
 	}
 
 	public PlayerObject getPlayer() {
