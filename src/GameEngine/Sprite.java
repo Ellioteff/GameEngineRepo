@@ -3,26 +3,16 @@ package GameEngine;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
-
 import java.awt.image.BufferedImage;
-
-import java.util.*;
 
 import javax.swing.JComponent;
 
 public abstract class Sprite extends JComponent {
 	private static final long serialVersionUID = 1L;
 	protected BufferedImage spriteImage;
-	private Graphics2D spriteImageG2D;
 	protected Rectangle spriteArea;
 	protected double xPos;
 	protected double yPos;
-	
-	public Sprite() {
-
-	}
-
-
 
 	@Override
 	public Rectangle getBounds() {
@@ -40,27 +30,32 @@ public abstract class Sprite extends JComponent {
 		g.drawImage(spriteImage, x, y, (int) spriteArea.getWidth(), (int) spriteArea.getHeight(), this);
 
 	}
+	
+	public double getxPos() {
+		return xPos;
+	}
+
+	public void setxPos(double xPos) {
+		this.xPos = xPos;
+	}
+
+	public double getyPos() {
+		return yPos;
+	}
+
+	public void setyPos(double yPos) {
+		this.yPos = yPos;
+	}
+
 
 	protected Sprite(int width, int height, int x, int y, BufferedImage image) {
 		spriteArea = new Rectangle(x, y, width, height);
 		xPos = x;
 		yPos = y;
 		spriteImage = image;
-		spriteImageG2D = (Graphics2D) this.spriteImage.getGraphics();
-
 	}
 
-	public Graphics2D getSpriteG2D() {
-		return spriteImageG2D;
-	}
 
-	public boolean equals(Object other) {
-		if (other == null)
-			return false;
-		if (getClass() != other.getClass())
-			return false;
-
-		return true;
-	}
+	
 
 }

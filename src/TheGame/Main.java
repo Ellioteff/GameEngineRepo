@@ -29,10 +29,10 @@ public class Main {
 		game.bindKeyPressed(KeyEvent.VK_SPACE, new KeyBinding(() -> {
 			ps.jump();
 		}));
-		
+	
 
-		game.addGameObject(new GameObject(new Ground(0,780)));
-		game.addGameObject(new GameObject(new Ground(500,680)));
+		game.addGameObject(new GameObject(new Ground(0, 780)));
+		game.addGameObject(new GameObject(new Ground(500, 680)));
 
 		game.run();
 	}

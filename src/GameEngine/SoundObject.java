@@ -1,6 +1,7 @@
 package GameEngine;
 
 import java.io.IOException;
+import java.io.Serializable;
 
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
@@ -9,12 +10,13 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.DataLine;
 import javax.sound.sampled.LineUnavailableException;
 
-public class SoundObject {
+public class SoundObject implements Serializable {
 
-	DataLine.Info info;
-	AudioFormat af;
-	byte[] audio;
-	int size;
+	private static final long serialVersionUID = 1L;
+	private DataLine.Info info;
+	private AudioFormat af;
+	private byte[] audio;
+	private int size;
 
 	public SoundObject(AudioInputStream audioIn) {
 

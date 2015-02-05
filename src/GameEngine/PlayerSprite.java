@@ -7,8 +7,8 @@ public class PlayerSprite extends DynamicSprite {
 	boolean leftDown = false;
 	
 
-	public PlayerSprite(int x, int y, String s) {
-		super(50, 50, x, y, Loader.loadImage(s));
+	public PlayerSprite(int width, int height, int x, int y, String s) {
+		super(width, height, x, y, Loader.loadImage(s));
 
 	}
 

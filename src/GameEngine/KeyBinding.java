@@ -1,7 +1,9 @@
 package GameEngine;
 
-public class KeyBinding implements Runnable {
+import java.io.Serializable;
 
+public class KeyBinding implements Runnable,Serializable {
+	private static final long serialVersionUID = 1L;
 	Runnable run;
 
 	KeyBinding() {
