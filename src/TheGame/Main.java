@@ -8,7 +8,7 @@ public class Main {
 
 	public static void main(String[] args) {
 
-		PlayerSprite ps = new PlayerSprite(50, 50, "assets/sprites/Silvia.png");
+		GamePlayer ps = new GamePlayer(50, 50);
 		PlayerObject po = new PlayerObject(ps);
 
 		Game game = new Game("Best Game EU", 1240, 880, po);
@@ -29,8 +29,10 @@ public class Main {
 		game.bindKeyPressed(KeyEvent.VK_SPACE, new KeyBinding(() -> {
 			ps.jump();
 		}));
+		
 
-		game.addGameObject(new GameObject(new Ground()));
+		game.addGameObject(new GameObject(new Ground(0,780)));
+		game.addGameObject(new GameObject(new Ground(500,680)));
 
 		game.run();
 	}

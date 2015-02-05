@@ -14,6 +14,8 @@ public class DynamicSprite extends Sprite {
 	protected boolean isSolid = false;
 	protected boolean onGround = false;
 	protected boolean hasHitbox = false;
+	protected ArrayList<Rectangle> hitboxes;
+
 
 	public DynamicSprite(int width, int height, int x, int y, BufferedImage image) {
 		super(width, height, x, y, image);
@@ -24,15 +26,12 @@ public class DynamicSprite extends Sprite {
 	}
 
 	public void actOnCollision(DynamicSprite s) {
-		//System.out.println("collision with " + s.toString());
 	}
 
 	protected void stepBackFromCollision() {
-		//System.out.println(yPos+" - " + previousY);
 		yPos = (long)previousY-1;
 		yVelocity = 0;
 		onGround = true;
-		//System.out.println("stepping back");
 	}
 
 	public ArrayList<Rectangle> getHitbox() {
@@ -51,10 +50,11 @@ public class DynamicSprite extends Sprite {
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		if (hasHitbox) {
-			for (Rectangle r : hitboxes)
-				g.fillRect(((int) (r.x + xPos)), ((int) (r.y + yPos)), r.width, r.height);
-		}
+// the code below can be used to display the hitbox		
+//		if (hasHitbox) {
+//			for (Rectangle r : hitboxes)
+//				g.fillRect(((int) (r.x + xPos)), ((int) (r.y + yPos)), r.width, r.height);
+//		}
 
 	}
 

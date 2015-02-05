@@ -1,34 +1,26 @@
 package GameEngine;
 
-import java.awt.Rectangle;
-
 public class PlayerSprite extends DynamicSprite {
 
 	private static final long serialVersionUID = 1L;
-	SoundObject sound = new SoundObject(Loader.loadSound("assets/sounds/Transformer Stingers 01 A.wav"));
-	SoundObject boing = new SoundObject(Loader.loadSound("assets/sounds/61847__simon-rue__boink-v3.wav"));
 	boolean rightDown = false;
 	boolean leftDown = false;
 	
 
 	public PlayerSprite(int x, int y, String s) {
 		super(50, 50, x, y, Loader.loadImage(s));
-		this.addHitbox(15, 0, 20, 50);
-		this.addHitbox(0, 40, 50, 10);
 
 	}
 
 	@Override
 	public void actOnCollision(DynamicSprite s) {
-
 		if (s.isSolid())
-			super.stepBackFromCollision();
+			stepBackFromCollision();
 	}
 
 	public void jump() {
 		if (onGround) {
 			yVelocity = -2;
-			boing.playSound();
 			onGround = false;
 		}
 	}
@@ -48,7 +40,7 @@ public class PlayerSprite extends DynamicSprite {
 			if (xVelocity > -2)
 				xVelocity -= 0.05;
 		} else {
-			if (xVelocity < 2)
+			if (xVelocity > -2)
 				xVelocity -= 0.02;
 		}
 	}

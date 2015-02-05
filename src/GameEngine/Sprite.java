@@ -17,8 +17,7 @@ public abstract class Sprite extends JComponent {
 	protected Rectangle spriteArea;
 	protected double xPos;
 	protected double yPos;
-	protected ArrayList<Rectangle> hitboxes;
-
+	
 	public Sprite() {
 
 	}
