@@ -63,6 +63,9 @@ public class GameObject implements Serializable {
 		
 	}
 	public String toString(){
-		return ""+id;
+		String s = ""+id;
+		if(hasSprite)
+			s+="\n"+sprite.toString();
+		return s;
 	}
 }

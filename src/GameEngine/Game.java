@@ -19,25 +19,21 @@ public class Game implements Serializable, KeyListener {
 	double nsPerTick = 1000000000D / Fps;
 	long lastTimer = System.currentTimeMillis();
 	double delta = 0;
-	HashMap<Integer, Runnable> keysPressed = new HashMap<>();
-	HashMap<Integer, Runnable> keysReleased = new HashMap<>();
+	private HashMap<Integer, Runnable> keysPressed = new HashMap<>();
+	private HashMap<Integer, Runnable> keysReleased = new HashMap<>();
 
 	private ArrayList<DynamicSprite> dynamicSprites = new ArrayList<DynamicSprite>();
 	private ArrayList<StaticSprite> staticSprites = new ArrayList<StaticSprite>();
 	private ArrayList<GameObject> gameObjects = new ArrayList<GameObject>();
 
-
-	
-
 	public Game(String name, int width, int height, PlayerObject p) {
-		this.player = p;	
+		this.player = p;
 		this.render = new Renderer(name, width, height);
-		render.addKeyListener(this);		
+		render.addKeyListener(this);
 		keepRunning = true;
 		addGameObject(p);
 
 	}
-
 
 	public void bindKeyPressed(Integer e, KeyBinding keyBinding) {
 		keysPressed.put(e, keyBinding);
@@ -46,6 +42,34 @@ public class Game implements Serializable, KeyListener {
 
 	public void bindKeyReleased(Integer e, KeyBinding keyBinding) {
 		keysReleased.put(e, keyBinding);
+
+	}
+
+	public HashMap<Integer, Point> getGameState() {
+		HashMap<Integer, Point> spritePositions = new HashMap<>();
+		for (GameObject go : gameObjects) {
+			if (go.hasSprite()) {
+				Point p = new Point((int)go.getSprite().getxPos(), (int)go.getSprite().getyPos());
+				System.out.println(p);
+				spritePositions.put(go.getId(), p);
+
+			}
+
+		}
+		return spritePositions;
+
+	}
+
+	public void loadSpritePositions(HashMap<Integer, Point> spritePositions) {
+		for (GameObject go : gameObjects) {
+			if (go.hasSprite()) {
+				go.getSprite().setxPos(spritePositions.get(go.getId()).getX());
+				go.getSprite().setyPos(spritePositions.get(go.getId()).getY());
+				System.out.println(spritePositions.get(go.getId()).getY());
+
+			}
+
+		}
 
 	}
 
@@ -108,7 +132,6 @@ public class Game implements Serializable, KeyListener {
 		}
 	}
 
-
 	public void addGameObject(GameObject go) {
 		gameObjects.add(go);
 
@@ -147,6 +170,10 @@ public class Game implements Serializable, KeyListener {
 			if (keyBinding == key)
 				keysReleased.get(keyBinding).run();
 		}
+	}
+	
+	public String toString(){
+		return gameObjects.toString();
 	}
 
 }

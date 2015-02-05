@@ -54,6 +54,11 @@ public abstract class Sprite extends JComponent {
 		yPos = y;
 		spriteImage = image;
 	}
+	
+	public String toString(){
+		return "X-position: "+xPos+"\nY-Position: "+yPos+"\n";
+		
+	}
 
 
 	

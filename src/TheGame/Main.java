@@ -29,6 +29,15 @@ public class Main {
 		game.bindKeyPressed(KeyEvent.VK_SPACE, new KeyBinding(() -> {
 			ps.jump();
 		}));
+		game.bindKeyPressed(KeyEvent.VK_S, new KeyBinding(() -> {
+			Loader.saveGame(game,"thegamesave.game");
+		}));
+		game.bindKeyPressed(KeyEvent.VK_L, new KeyBinding(() -> {
+			Loader.loadGame(game,"thegamesave.game");
+		}));
+		game.bindKeyPressed(KeyEvent.VK_T, new KeyBinding(() -> {
+			System.out.println(game.toString());
+		}));
 	
 
 		game.addGameObject(new GameObject(new Ground(0, 780)));
