@@ -13,12 +13,18 @@ public abstract class Sprite extends JComponent {
 	protected Rectangle spriteArea;
 	protected double xPos;
 	protected double yPos;
+	protected int health = 100;
 
 	@Override
 	public Rectangle getBounds() {
 		Rectangle temp = new Rectangle(spriteArea);
 		return temp;
 	}
+
+	public int getHealth() {
+		return health;
+	}
+
 
 	@Override
 	protected void paintComponent(Graphics g) {

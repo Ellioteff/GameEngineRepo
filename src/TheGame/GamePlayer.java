@@ -1,5 +1,6 @@
 package TheGame;
 
+import GameEngine.DynamicSprite;
 import GameEngine.Loader;
 import GameEngine.PlayerSprite;
 import GameEngine.SoundObject;
@@ -14,6 +15,12 @@ public class GamePlayer extends PlayerSprite {
 		this.addHitbox(0, 40, 50, 10);
 	}
 
+	@Override
+	public void actOnCollision(DynamicSprite s){
+		super.actOnCollision(s);
+		if( s instanceof SimpleEnemy)
+			health = 0;
+	}
 	@Override
 	public void jump() {
 		if(onGround)

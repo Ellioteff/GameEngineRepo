@@ -67,9 +67,7 @@ public class PlayerSprite extends DynamicSprite {
 			walkLeft();
 		if (rightDown)
 			walkRight();
-		this.setPrevious();
-		xPos += xVelocity;
-		yPos += yVelocity;
+		super.move();
 		if (onGround)
 			xVelocity = Physics.applyAirResistance(xVelocity, 20);
 		else

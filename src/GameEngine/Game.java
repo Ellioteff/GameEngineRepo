@@ -19,8 +19,8 @@ public class Game implements Serializable, KeyListener {
 	double nsPerTick = 1000000000D / Fps;
 	long lastTimer = System.currentTimeMillis();
 	double delta = 0;
-	private HashMap<Integer, Runnable> keysPressed = new HashMap<>();
-	private HashMap<Integer, Runnable> keysReleased = new HashMap<>();
+	private HashMap<Integer, KeyBinding> keysPressed = new HashMap<>();
+	private HashMap<Integer, KeyBinding> keysReleased = new HashMap<>();
 
 	private ArrayList<DynamicSprite> dynamicSprites = new ArrayList<DynamicSprite>();
 	private ArrayList<StaticSprite> staticSprites = new ArrayList<StaticSprite>();
@@ -49,8 +49,7 @@ public class Game implements Serializable, KeyListener {
 		HashMap<Integer, Point> spritePositions = new HashMap<>();
 		for (GameObject go : gameObjects) {
 			if (go.hasSprite()) {
-				Point p = new Point((int)go.getSprite().getxPos(), (int)go.getSprite().getyPos());
-				System.out.println(p);
+				Point p = new Point((int) go.getSprite().getxPos(), (int) go.getSprite().getyPos());
 				spritePositions.put(go.getId(), p);
 
 			}
@@ -65,7 +64,11 @@ public class Game implements Serializable, KeyListener {
 			if (go.hasSprite()) {
 				go.getSprite().setxPos(spritePositions.get(go.getId()).getX());
 				go.getSprite().setyPos(spritePositions.get(go.getId()).getY());
-				System.out.println(spritePositions.get(go.getId()).getY());
+				if (go.getSprite() instanceof DynamicSprite) {
+
+					DynamicSprite s = (DynamicSprite) go.getSprite();
+					s.onGround = false;
+				}
 
 			}
 
@@ -87,6 +90,7 @@ public class Game implements Serializable, KeyListener {
 					lastTimer += 1.67;
 					moveSprites();
 					checkForCollisions();
+					removeDeadObjects();
 					render();
 				}
 			} catch (InterruptedException ie) {
@@ -100,6 +104,22 @@ public class Game implements Serializable, KeyListener {
 	private void moveSprites() {
 		for (DynamicSprite s : dynamicSprites)
 			s.move();
+	}
+
+	private void removeDeadObjects() {
+		ArrayList<GameObject> temp = new ArrayList<>();
+		for (GameObject go : gameObjects) {
+			if (go.hasSprite() && go.getSprite().getHealth() <= 0) {
+				temp.add(go);
+			}
+		}
+		for (GameObject go : temp) {
+			gameObjects.remove(go);
+			dynamicSprites.remove(go.getSprite());
+			staticSprites.remove(go.getSprite());
+			render.remove(go.getSprite());
+		}
+
 	}
 
 	public void setFps(double fps) {
@@ -171,8 +191,8 @@ public class Game implements Serializable, KeyListener {
 				keysReleased.get(keyBinding).run();
 		}
 	}
-	
-	public String toString(){
+
+	public String toString() {
 		return gameObjects.toString();
 	}
 

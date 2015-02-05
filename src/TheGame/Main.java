@@ -30,18 +30,19 @@ public class Main {
 			ps.jump();
 		}));
 		game.bindKeyPressed(KeyEvent.VK_S, new KeyBinding(() -> {
-			Loader.saveGame(game,"thegamesave.game");
+			Loader.saveGame(game, "thegamesave.game");
 		}));
 		game.bindKeyPressed(KeyEvent.VK_L, new KeyBinding(() -> {
-			Loader.loadGame(game,"thegamesave.game");
+			Loader.loadGame(game, "thegamesave.game");
 		}));
-		game.bindKeyPressed(KeyEvent.VK_T, new KeyBinding(() -> {
-			System.out.println(game.toString());
-		}));
-	
 
 		game.addGameObject(new GameObject(new Ground(0, 780)));
-		game.addGameObject(new GameObject(new Ground(500, 680)));
+		game.addGameObject(new GameObject(new SimpleEnemy(1000, -1500)));
+		game.addGameObject(new GameObject(new SimpleEnemy(1000, -500)));
+		game.addGameObject(new GameObject(new SimpleEnemy(1000, 500)));
+
+
+
 
 		game.run();
 	}
