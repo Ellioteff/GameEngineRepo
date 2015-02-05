@@ -18,6 +18,8 @@ public class Game implements Serializable, KeyListener {
 	private int Fps = 60;
 	long currentTime = System.nanoTime();
 	long nsPerTick = (1000000000 / Fps);
+	long delta = 0;
+	int tick = 0;
 
 	private HashMap<Integer, KeyBinding> keysPressed = new HashMap<>();
 	private HashMap<Integer, KeyBinding> keysReleased = new HashMap<>();
@@ -85,13 +87,21 @@ public class Game implements Serializable, KeyListener {
 			long present = System.nanoTime();
 			long updateLength = present - currentTime;
 			currentTime = present;
-			double delta = updateLength / ((double) nsPerTick);
-System.out.println(delta);
-			moveSprites(delta);
+			tick++;
+			delta += updateLength;
+
+			if (delta >= nsPerTick*Fps) {
+				
+				System.out.println("(FPS: " + tick + ")");
+				
+				tick = 0;
+				delta = 0;
+			}
+			render();
+			moveSprites();
 			checkForCollisions();
 			removeDeadObjects();
-			render();
-
+			
 			try {
 				Thread.sleep((currentTime - present + nsPerTick) / 1000000);
 			} catch (InterruptedException ie) {
@@ -101,9 +111,9 @@ System.out.println(delta);
 
 	}
 
-	private void moveSprites(double delta) {
+	private void moveSprites() {
 		for (DynamicSprite s : dynamicSprites)
-			s.move(delta);
+			s.move();
 	}
 
 	private void removeDeadObjects() {
