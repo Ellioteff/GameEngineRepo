@@ -15,9 +15,9 @@ public class Game implements Serializable, KeyListener {
 	private PlayerObject player;
 	private boolean keepRunning;
 
-	private int Fps = 60;
+	private int speedOfGame = 300;
 	long currentTime = System.nanoTime();
-	long nsPerTick = (1000000000 / Fps);
+	long nsPerTick = (1000000000 / speedOfGame);
 	long delta = 0;
 	int tick = 0;
 
@@ -51,8 +51,7 @@ public class Game implements Serializable, KeyListener {
 		HashMap<Integer, Point> spritePositions = new HashMap<>();
 		for (GameObject go : gameObjects) {
 			if (go.hasSprite()) {
-				Point p = new Point((int) go.getSprite().getxPos(), (int) go
-						.getSprite().getyPos());
+				Point p = new Point((int) go.getSprite().getxPos(), (int) go.getSprite().getyPos());
 				System.out.println(p);
 				spritePositions.put(go.getId(), p);
 
@@ -90,10 +89,10 @@ public class Game implements Serializable, KeyListener {
 			tick++;
 			delta += updateLength;
 
-			if (delta >= nsPerTick*Fps) {
-				
+			if (delta >= nsPerTick * speedOfGame) {
+
 				System.out.println("(FPS: " + tick + ")");
-				
+
 				tick = 0;
 				delta = 0;
 			}
@@ -101,7 +100,7 @@ public class Game implements Serializable, KeyListener {
 			moveSprites();
 			checkForCollisions();
 			removeDeadObjects();
-			
+
 			try {
 				Thread.sleep((currentTime - present + nsPerTick) / 1000000);
 			} catch (InterruptedException ie) {
@@ -125,8 +124,7 @@ public class Game implements Serializable, KeyListener {
 		}
 		if (temp.contains(player)) {
 			System.out.println("You lost");
-			render.dispatchEvent(new WindowEvent(render,
-					WindowEvent.WINDOW_CLOSING));
+			render.dispatchEvent(new WindowEvent(render, WindowEvent.WINDOW_CLOSING));
 
 		}
 		for (GameObject go : temp) {
@@ -138,8 +136,8 @@ public class Game implements Serializable, KeyListener {
 
 	}
 
-	public void setFps(int fps) {
-		this.Fps = fps;
+	public void setSpeedOfGame(int fps) {
+		this.speedOfGame = fps;
 	}
 
 	public void render() {
