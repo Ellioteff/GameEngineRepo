@@ -7,15 +7,14 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import javax.swing.*;
-
 public class Game implements Serializable, KeyListener {
 
 	private static final long serialVersionUID = 1L;
 
-	private JFrame frame;
+	
 	private int width;
 	private int height;
+	private Renderer render;
 	private PlayerObject player;
 	private boolean keepRunning;
 
@@ -31,14 +30,20 @@ public class Game implements Serializable, KeyListener {
 	private ArrayList<StaticSprite> staticSprites = new ArrayList<StaticSprite>();
 	private ArrayList<GameObject> gameObjects = new ArrayList<GameObject>();
 
+
+	
+
 	public Game(String name, int width, int height, PlayerObject p) {
-		this.player = p;
-		frame = new JFrame(name);
-		frame.setPreferredSize(new Dimension(width, height));
-		setup();
+		this.player = p;	
+		this.width = width;
+		this.height = height;
+		this.render = new Renderer(name, width, height);
+		render.addKeyListener(this);		
+		keepRunning = true;
 		addGameObject(p);
 
 	}
+
 
 	public void bindKeyPressed(Integer e, KeyBinding keyBinding) {
 		keysPressed.put(e, keyBinding);
@@ -53,6 +58,7 @@ public class Game implements Serializable, KeyListener {
 	public void run() {
 
 		while (keepRunning != false) {
+
 			long present = System.nanoTime();
 			delta += (present - currentTime) / nsPerTick;
 			currentTime = present;
@@ -83,7 +89,7 @@ public class Game implements Serializable, KeyListener {
 	}
 
 	public void render() {
-		frame.repaint();
+		render.repaint();
 	}
 
 	public int getWidth() {
@@ -92,6 +98,10 @@ public class Game implements Serializable, KeyListener {
 
 	public int getHeight() {
 		return height;
+	}
+
+	public PlayerObject getPlayer() {
+		return player;
 	}
 
 	private void checkForCollisions() {
@@ -104,16 +114,6 @@ public class Game implements Serializable, KeyListener {
 		}
 	}
 
-	public void setup() {
-		keepRunning = true;
-		frame.addKeyListener(this);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setLayout(new BorderLayout());
-		frame.pack();
-		frame.setResizable(false);
-		frame.setLocationRelativeTo(null);
-		frame.setVisible(true);
-	}
 
 	public void addGameObject(GameObject go) {
 		gameObjects.add(go);
@@ -123,9 +123,9 @@ public class Game implements Serializable, KeyListener {
 				dynamicSprites.add((DynamicSprite) go.getSprite());
 			else if (go.getSprite() instanceof StaticSprite)
 				staticSprites.add((StaticSprite) go.getSprite());
-			frame.add(go.getSprite());
+			render.add(go.getSprite());
 		}
-		frame.validate();
+		render.validate();
 
 	}
 
