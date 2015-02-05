@@ -10,8 +10,8 @@ public class Physics {
 		if (xVelocity > 0.01)
 			xVelocity = xVelocity * (0.999 - (((double) force) / 1000));
 		else if (xVelocity < -0.01)
-			xVelocity += xVelocity * (0.999 - (((double) force) / 1000));
-		if (xVelocity < 0.1 && xVelocity > -0.1)
+			xVelocity = xVelocity * (0.999 - (((double) force) / 1000));
+		if (xVelocity < 0.01 && xVelocity > -0.01)
 			xVelocity = 0;
 		return xVelocity;
 	}

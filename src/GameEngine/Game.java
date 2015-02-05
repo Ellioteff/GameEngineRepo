@@ -24,7 +24,8 @@ public class Game implements Serializable, KeyListener {
 	double nsPerTick = 1000000000D / Fps;
 	long lastTimer = System.currentTimeMillis();
 	double delta = 0;
-	HashMap<Integer, Runnable> keys = new HashMap<>();
+	HashMap<Integer, Runnable> keysPressed = new HashMap<>();
+	HashMap<Integer, Runnable> keysReleased = new HashMap<>();
 
 	private ArrayList<DynamicSprite> dynamicSprites = new ArrayList<DynamicSprite>();
 	private ArrayList<StaticSprite> staticSprites = new ArrayList<StaticSprite>();
@@ -39,12 +40,14 @@ public class Game implements Serializable, KeyListener {
 
 	}
 
-	public void bindKey(Integer e, KeyBinding keyBinding) {
+	public void bindKeyPressed(Integer e, KeyBinding keyBinding) {
+		keysPressed.put(e, keyBinding);
 
-		
-		keys.put(e, () -> new KeyBinding());
-		
-		
+	}
+
+	public void bindKeyReleased(Integer e, KeyBinding keyBinding) {
+		keysReleased.put(e, keyBinding);
+
 	}
 
 	public void run() {
@@ -134,23 +137,22 @@ public class Game implements Serializable, KeyListener {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		int keyBinding = e.getKeyCode();
-		
-		
-		if(keyBinding == KeyEvent.VK_LEFT){
-			keys.get(keyBinding).run();
+
+		for (Integer key : keysPressed.keySet()) {
+			if (keyBinding == key)
+				keysPressed.get(keyBinding).run();
 		}
-		if(keyBinding == KeyEvent.VK_RIGHT){
-			keys.get(keyBinding).run();
-		}
-		if(keyBinding == KeyEvent.VK_SPACE){
-			keys.get(keyBinding).run();
-		}
-		
+
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
+		int keyBinding = e.getKeyCode();
 
+		for (Integer key : keysReleased.keySet()) {
+			if (keyBinding == key)
+				keysReleased.get(keyBinding).run();
+		}
 	}
 
 }
