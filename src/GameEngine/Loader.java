@@ -67,7 +67,7 @@ public class Loader {
 			InputStream file = new FileInputStream(s);
 			InputStream buffer = new BufferedInputStream(file);
 			ObjectInput input = new ObjectInputStream(buffer);
-			HashMap<Integer, Point> spritePositions= (HashMap<Integer, Point>) input.readObject();
+			HashMap<Integer, Point> spritePositions = (HashMap<Integer, Point>) input.readObject();
 			g.loadSpritePositions(spritePositions);
 			input.close();
 
@@ -75,6 +75,8 @@ public class Loader {
 			ex.printStackTrace();
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
+		} catch (NullPointerException npe) {
+			npe.printStackTrace();
 		}
 	}
 

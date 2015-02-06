@@ -19,7 +19,7 @@ public class Game implements Serializable, KeyListener {
 	long currentTime = System.nanoTime();
 	long nsPerTick = (1000000000 / speedOfGame);
 	long delta = 0;
-	int tick = 0;
+	
 
 	private HashMap<Integer, KeyBinding> keysPressed = new HashMap<>();
 	private HashMap<Integer, KeyBinding> keysReleased = new HashMap<>();
@@ -28,6 +28,8 @@ public class Game implements Serializable, KeyListener {
 	private ArrayList<StaticSprite> staticSprites = new ArrayList<StaticSprite>();
 	private ArrayList<GameObject> gameObjects = new ArrayList<GameObject>();
 
+	/* Game constructor creates a new renders that works as a window for the game and then adds a Keylistener 
+	to that renderer and adds all game object to the renderer */
 	public Game(String name, int width, int height, PlayerObject p) {
 		this.player = p;
 		this.render = new Renderer(name, width, height);
@@ -36,7 +38,8 @@ public class Game implements Serializable, KeyListener {
 		addGameObject(p);
 
 	}
-
+	/*Binds a key with and puts it in a hashmap with all the other keys that are bound, 
+	this will work as a boolean if the button is pressed or released for smoothness for the player*/
 	public void bindKeyPressed(Integer e, KeyBinding keyBinding) {
 		keysPressed.put(e, keyBinding);
 
@@ -47,6 +50,7 @@ public class Game implements Serializable, KeyListener {
 
 	}
 
+	
 	public HashMap<Integer, Point> getGameState() {
 		HashMap<Integer, Point> spritePositions = new HashMap<>();
 		for (GameObject go : gameObjects) {
@@ -78,7 +82,8 @@ public class Game implements Serializable, KeyListener {
 		}
 
 	}
-
+	/* This method is the game loop which keeps the render updated with the sprite's movements and checks collisions with other objects */
+	  
 	public void run() {
 
 		while (keepRunning != false) {
@@ -86,14 +91,10 @@ public class Game implements Serializable, KeyListener {
 			long present = System.nanoTime();
 			long updateLength = present - currentTime;
 			currentTime = present;
-			tick++;
 			delta += updateLength;
 
 			if (delta >= nsPerTick * speedOfGame) {
-
-				System.out.println("(FPS: " + tick + ")");
-
-				tick = 0;
+				
 				delta = 0;
 			}
 			render();
@@ -109,12 +110,14 @@ public class Game implements Serializable, KeyListener {
 		}
 
 	}
-
+	// for each DynamicSprite it calls its move function
 	private void moveSprites() {
 		for (DynamicSprite s : dynamicSprites)
 			s.move();
 	}
-
+	/*creates a temporary arraylist of GameObjects and checks for gameobjects which has a sprite and has health equals or below 0,
+	adds these to the list then if the list contains the player it shuts the renderer down then deletes the rest*/
+	
 	private void removeDeadObjects() {
 		ArrayList<GameObject> temp = new ArrayList<>();
 		for (GameObject go : gameObjects) {
@@ -155,7 +158,7 @@ public class Game implements Serializable, KeyListener {
 	public PlayerObject getPlayer() {
 		return player;
 	}
-
+	//looping through all DynamicSprites and calls for checkCollsion i the Physics class and if they do collide DynamicSprite function actOnCollsion is called
 	private void checkForCollisions() {
 		for (DynamicSprite s : dynamicSprites) {
 			for (DynamicSprite s2 : dynamicSprites) {
@@ -165,7 +168,7 @@ public class Game implements Serializable, KeyListener {
 			}
 		}
 	}
-
+	//add the parametered GameObject to an arraylist, checks if it is an dynamic or static sprite then adds it to the renderer and validates
 	public void addGameObject(GameObject go) {
 		gameObjects.add(go);
 
@@ -184,7 +187,8 @@ public class Game implements Serializable, KeyListener {
 	public void keyTyped(KeyEvent e) {
 
 	}
-
+	/*Overrides KeyListeners methods, if the key that is pressed/release is equal to one that is in 
+	the hashmap of keybindings that lambda expression is applied*/
 	@Override
 	public void keyPressed(KeyEvent e) {
 		int keyBinding = e.getKeyCode();
@@ -195,7 +199,7 @@ public class Game implements Serializable, KeyListener {
 		}
 
 	}
-
+	
 	@Override
 	public void keyReleased(KeyEvent e) {
 		int keyBinding = e.getKeyCode();
