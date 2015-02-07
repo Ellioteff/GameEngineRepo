@@ -13,18 +13,19 @@ public class PlayerSprite extends DynamicSprite {
 	}
 
 	@Override
+	//if the sprite that the playersprite collided with is solid it will step back from collision.
 	public void actOnCollision(DynamicSprite s) {
 		if (s.isSolid())
 			stepBackFromCollision();
 	}
-
+	//simple jump function that changes the velocity of the player and sets onground to false so that gravity is applied to the player.
 	public void jump() {
 		if (onGround) {
 			yVelocity = -2;
 			onGround = false;
 		}
 	}
-
+	//walkleft and walkright methods which simply increases/decreases the xVelocity depending on if you're in the air or not.
 	private void walkRight( ) {
 		if (onGround) {
 			if (xVelocity < 2)
@@ -44,7 +45,7 @@ public class PlayerSprite extends DynamicSprite {
 				xVelocity -= 0.02;
 		}
 	}
-
+	//set methods which allows for smooth movement by using booleans for keyreleased and keypressed.
 	public void setRightDown() {
 		rightDown = true;
 	}
@@ -60,7 +61,7 @@ public class PlayerSprite extends DynamicSprite {
 	public void setLeftUp() {
 		leftDown = false;
 	}
-
+	//move method that applies air resistance and gravity on the player on top of moving him.
 	@Override
 	public void move() {
 		if (leftDown)

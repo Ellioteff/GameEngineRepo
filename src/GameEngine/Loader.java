@@ -22,7 +22,7 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
 public class Loader {
-
+	//creates a BufferedImage from the file path sent in and returns null if the image failed to load.
 	public static BufferedImage loadImage(String filePath) {
 		BufferedImage spriteImage;
 		try {
@@ -35,7 +35,8 @@ public class Loader {
 		return spriteImage;
 
 	}
-
+	//creates a audioinputstream from the file path sent in and return it so that the soundobject and use it to create the byte arrays needed
+	//to play a sound multiple times with good efficiency.
 	public static AudioInputStream loadSound(String filePath) {
 		AudioInputStream audioIn = null;
 		try {
@@ -46,7 +47,8 @@ public class Loader {
 		return audioIn;
 
 	}
-
+	//this method combined with the one in game.java does currently only save down the spritepositions but this could be evolved to
+	//save down more data in the future.
 	public static void saveGame(Game g, String s) {
 		try {
 			OutputStream file = new FileOutputStream(s);
@@ -61,7 +63,7 @@ public class Loader {
 		}
 
 	}
-
+	//loads in the sprite positions from the file path parameter and loads them into the game object.
 	public static void loadGame(Game g, String s) {
 		try {
 			InputStream file = new FileInputStream(s);

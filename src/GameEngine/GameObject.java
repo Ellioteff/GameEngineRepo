@@ -2,6 +2,8 @@ package GameEngine;
 
 import java.io.Serializable;
 
+//gameobject class that can contain a sprite, gameobjects does not necessarily have a sprite representation
+//which is why we made this as a container for sprites.
 public class GameObject implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private String name;
@@ -10,12 +12,13 @@ public class GameObject implements Serializable {
 	private int id;
 	private static int idCounter = 0;
 
+	//uses a static id variable to set the gameobjects id to a unique value in both constructors, makes for easier equals method.
+
 	public GameObject() {
 		id = idCounter;
 		idCounter++;
 
 	}
-
 	public GameObject(Sprite s) {
 		sprite = s;
 		hasSprite = true;

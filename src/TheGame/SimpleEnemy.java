@@ -13,13 +13,13 @@ public class SimpleEnemy extends DynamicSprite {
 		super(50, 50, x, y, Loader.loadImage("assets/sprites/kungen.png"));
 		xVelocity = 0;
 	}
-
+	//same jump and actoncollision methods that are used by the player.
 	@Override
 	public void actOnCollision(DynamicSprite s) {
 		if (s.isSolid())
 			stepBackFromCollision();
 	}
-
+	
 	public void jump() {
 		if (onGround) {
 			yVelocity = -2;
@@ -27,6 +27,7 @@ public class SimpleEnemy extends DynamicSprite {
 		}
 	}
 
+	//simple move method that randomly calls the jump method.
 	@Override
 	public void move() {
 		super.move();
