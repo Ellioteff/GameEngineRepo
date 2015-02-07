@@ -14,10 +14,8 @@ public class Game implements Serializable, KeyListener {
 	private Renderer render;
 	private PlayerObject player;
 	private boolean keepRunning;
-
-	private int speedOfGame = 300;
 	long currentTime = System.nanoTime();
-	long nsPerTick = (1000000000 / speedOfGame);
+	long nsPerTick = (1000000000 / 300);
 	long delta = 0;
 	
 
@@ -28,8 +26,8 @@ public class Game implements Serializable, KeyListener {
 	private ArrayList<StaticSprite> staticSprites = new ArrayList<StaticSprite>();
 	private ArrayList<GameObject> gameObjects = new ArrayList<GameObject>();
 
-	/* Game constructor creates a new renders that works as a window for the game and then adds a Keylistener 
-	to that renderer and adds all game object to the renderer */
+	/* Game constructor creates a new renderer that works as a window for the game and then adds a Keylistener 
+	to that renderer and adds the player object to the renderer */
 	public Game(String name, int width, int height, PlayerObject p) {
 		this.player = p;
 		this.render = new Renderer(name, width, height);
@@ -38,8 +36,8 @@ public class Game implements Serializable, KeyListener {
 		addGameObject(p);
 
 	}
-	/*Binds a key with and puts it in a hashmap with all the other keys that are bound, 
-	this will work as a boolean if the button is pressed or released for smoothness for the player*/
+	/*Binds a key with a KeyBinding object (a Runnable Object) and puts it in a hashmap with all the other keys that are bound, 
+	The keybindings are created in the application by using Javas 8s Lambdas*/
 	public void bindKeyPressed(Integer e, KeyBinding keyBinding) {
 		keysPressed.put(e, keyBinding);
 
@@ -50,13 +48,12 @@ public class Game implements Serializable, KeyListener {
 
 	}
 
-	
+	//returns a hashmap containing sprite ids and their positions to be saved down on a file.
 	public HashMap<Integer, Point> getGameState() {
 		HashMap<Integer, Point> spritePositions = new HashMap<>();
 		for (GameObject go : gameObjects) {
 			if (go.hasSprite()) {
 				Point p = new Point((int) go.getSprite().getxPos(), (int) go.getSprite().getyPos());
-				System.out.println(p);
 				spritePositions.put(go.getId(), p);
 
 			}
@@ -65,7 +62,7 @@ public class Game implements Serializable, KeyListener {
 		return spritePositions;
 
 	}
-
+	//loads spritepositions from a hashmap that can be loaded from a file
 	public void loadSpritePositions(HashMap<Integer, Point> spritePositions) {
 		for (GameObject go : gameObjects) {
 			if (go.hasSprite()) {
@@ -93,10 +90,6 @@ public class Game implements Serializable, KeyListener {
 			currentTime = present;
 			delta += updateLength;
 
-			if (delta >= nsPerTick * speedOfGame) {
-				
-				delta = 0;
-			}
 			render();
 			moveSprites();
 			checkForCollisions();
@@ -139,9 +132,7 @@ public class Game implements Serializable, KeyListener {
 
 	}
 
-	public void setSpeedOfGame(int fps) {
-		this.speedOfGame = fps;
-	}
+
 
 	public void render() {
 		render.repaint();
